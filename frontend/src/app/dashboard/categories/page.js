@@ -1,6 +1,9 @@
+"use client";
+
 import PageTitle from "@/components/dashboard/page-title";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./componanets/column";
+import CategoryDialog from "./componanets/category-dialog";
 
 export default function Page() {
   const data = [
@@ -24,10 +27,9 @@ export default function Page() {
   return (
     <main>
       <section className="container">
-        <PageTitle
-          title="Categories"
-          subtitle="Manage your product categories"
-        />
+        <PageTitle title="Categories" subtitle="Manage your product categories">
+          <CategoryDialog />
+        </PageTitle>
 
         <DataTable columns={columns} data={data} keyword="name" />
       </section>

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { DataTableColumnHeader } from "@/components/ui/reusable/data-table-column-header";
 import { Badge } from "@/components/ui/badge";
+import OrderDialog from "./order-dialog";
 
 export const columns = [
   {
@@ -64,19 +65,20 @@ export const columns = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Actions" />
     ),
-    cell: ({ row }) => (
-      <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm">
-          View Details
-        </Button>
-        <Button
-          variant="destructive"
-          size="sm"
-          disabled={["SHIPPED", "DELIVERED"].includes(row.getValue("status"))}
-        >
-          Cancel
-        </Button>
-      </div>
-    ),
+    cell: ({ row }) => {
+      const order = row.original;
+
+      return (
+        <div className="flex items-center gap-2">
+          <OrderDialog order={order} />
+          <Button
+            variant="destructive"
+            disabled={["SHIPPED", "DELIVERED"].includes(order.status)}
+          >
+            Cancel
+          </Button>
+        </div>
+      );
+    },
   },
 ];

@@ -2,43 +2,46 @@
 
 import { Button } from "@/components/ui/button";
 import { DataTableColumnHeader } from "@/components/ui/reusable/data-table-column-header";
+import { Badge } from "@/components/ui/badge";
+import CategoryDialog from "./category-dialog";
 
 export const columns = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} title="Category Name" />
     ),
   },
   {
-    title: "Product Count",
     accessorKey: "products",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Product Count" />
+      <DataTableColumnHeader column={column} title="Products" />
     ),
     cell: ({ row }) => {
-      const products = row.getValue("products") || [];
-      return <div>{products.length}</div>;
+      const products = row.getValue("products");
+      const count = products.length;
+
+      return (
+        <Badge variant="secondary" className="font-medium">
+          {count} {count === 1 ? "product" : "products"}
+        </Badge>
+      );
     },
   },
   {
-    accessorKey: "actions",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Actions" />
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm">
-          Edit
-        </Button>
-        <Button
-          variant="destructive"
-          size="sm"
-          disabled={row.getValue("products")?.length > 0}
-        >
-          Delete
-        </Button>
-      </div>
-    ),
+    id: "actions",
+    cell: ({ row }) => {
+      const category = row.original;
+
+      return (
+        <div className="flex items-center gap-2">
+          <CategoryDialog category={category} />
+
+          <Button variant="destructive" disabled={category.products.length > 0}>
+            Delete
+          </Button>
+        </div>
+      );
+    },
   },
 ];
