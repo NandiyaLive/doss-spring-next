@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import "./globals.css";
 import { inter } from "@/lib/fonts";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata = {
   title: {
@@ -12,8 +13,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={cn(inter.className, "antialiased")}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn(inter.className, "antialiased")}>
+        <Toaster />
+        {children}
+      </body>
     </html>
   );
 }

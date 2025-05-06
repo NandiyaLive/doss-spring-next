@@ -4,7 +4,7 @@ export default function Page() {
   return (
     <main>
       <section className="container">
-        <PageTitle title="Dashboard" subtitle="Welcome to your dashboard" />
+        <PageTitle title="Products" subtitle="Manage your products" />
       </section>
     </main>
   );
