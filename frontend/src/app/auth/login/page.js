@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -41,6 +42,8 @@ export default function Page() {
     },
   });
 
+  const router = useRouter();
+
   async function onSubmit(values) {
     try {
       console.log(values);
@@ -49,6 +52,7 @@ export default function Page() {
           <code className="text-white">{JSON.stringify(values, null, 2)}</code>
         </pre>,
       );
+      router.push("/dashboard");
     } catch (error) {
       console.error("Form submission error", error);
       toast.error("Failed to submit the form. Please try again.");
