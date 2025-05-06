@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { DataTableColumnHeader } from "@/components/ui/reusable/data-table-column-header";
+import ProductDialog from "./product-dialog";
 
 export const columns = [
   {
@@ -71,9 +72,7 @@ export const columns = [
     ),
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        <Button variant="outline" size="sm">
-          Edit
-        </Button>
+        <ProductDialog product={row.original} />
         <Button variant="destructive" size="sm">
           Delete
         </Button>

@@ -8,7 +8,7 @@ export const columns = [
   {
     id: "customer",
     title: "Customer",
-    accessorKey: "user.username",
+    accessorKey: "user.name",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Customer" />
     ),

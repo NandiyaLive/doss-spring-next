@@ -47,6 +47,7 @@ export function DataTable({ columns, data, keyword }) {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    enableColumnFilters: true,
     state: {
       sorting,
       columnFilters,
@@ -64,9 +65,12 @@ export function DataTable({ columns, data, keyword }) {
           <Input
             placeholder={`Search by ${keyword}`}
             value={table.getColumn(keyword)?.getFilterValue() ?? ""}
-            onChange={(event) =>
-              table.getColumn(keyword)?.setFilter(event.target.value)
-            }
+            onChange={(event) => {
+              const column = table.getColumn(keyword);
+              if (column) {
+                column.setFilterValue(event.target.value);
+              }
+            }}
             className="max-w-sm capitalize"
           />
         )}
@@ -83,7 +87,6 @@ export function DataTable({ columns, data, keyword }) {
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => {
-                console.log(column);
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
@@ -103,12 +106,12 @@ export function DataTable({ columns, data, keyword }) {
 
       <div className="rounded-md border">
         <Table>
-          <TableHeader>
+          <TableHeader className="px-8">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="px-4">
+                    <TableHead key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
